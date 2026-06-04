@@ -11,7 +11,7 @@ function calculateDday(date){
     const diff =
         Math.ceil(
             (target - today) /
-            (1000 * 60 * 60 * 24)
+            (1000*60*60*24)
         );
 
     return diff >= 0
@@ -38,15 +38,30 @@ function addSchedule(){
     const item =
         document.createElement("div");
 
-    item.className =
-        "schedule-item";
+    const today =
+        new Date();
+
+    const examDate =
+        new Date(date);
+
+    today.setHours(0,0,0,0);
+    examDate.setHours(0,0,0,0);
+
+    if(today.getTime() === examDate.getTime()){
+        item.className =
+            "schedule-item today-subject";
+    }
+    else{
+        item.className =
+            "schedule-item";
+    }
 
     item.draggable = true;
 
     item.innerHTML =
         `<strong>${name}</strong><br>
-         ${type}<br>
-         ${calculateDday(date)}`;
+        ${type}<br>
+        ${calculateDday(date)}`;
 
     item.id =
         "item" + count++;
@@ -83,40 +98,28 @@ function createCalendar(){
 
     calendar.innerHTML = "";
 
+    const year =
+        new Date().getFullYear();
+
     const month =
         parseInt(
             document.getElementById("monthSelect").value
         );
 
-    const year =
-        new Date().getFullYear();
-
-    const today =
-        new Date();
-
-    const lastDay =
+    const days =
         new Date(
             year,
             month + 1,
             0
         ).getDate();
 
-    for(let i=1;i<=lastDay;i++){
+    for(let i=1;i<=days;i++){
 
         const day =
             document.createElement("div");
 
         day.className =
             "day";
-
-        const isToday =
-            today.getFullYear() === year &&
-            today.getMonth() === month &&
-            today.getDate() === i;
-
-        if(isToday){
-            day.classList.add("today");
-        }
 
         day.innerHTML =
             `<div class="day-title">
@@ -145,9 +148,7 @@ function createCalendar(){
                     document.createElement("div");
 
                 tag.className =
-                    isToday
-                    ? "tag today-tag"
-                    : "tag";
+                    "tag";
 
                 tag.innerHTML =
                     data;
@@ -155,11 +156,7 @@ function createCalendar(){
                 tag.onclick =
                     function(){
 
-                        if(
-                            confirm(
-                                "일정을 삭제하시겠습니까?"
-                            )
-                        ){
+                        if(confirm("삭제하시겠습니까?")){
                             tag.remove();
                         }
 
