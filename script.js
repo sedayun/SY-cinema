@@ -1,4 +1,3 @@
-```javascript
 function createCalendar(){
 
     const calendar =
