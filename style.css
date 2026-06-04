@@ -1,7 +1,7 @@
 body{
     margin:0;
     padding:20px;
-    font-family:Arial;
+    font-family:Arial,sans-serif;
     background:#f4f4f4;
 }
 
@@ -39,11 +39,18 @@ button{
 
 .schedule-item{
     background:#eef5ff;
-    border:1px solid #aaa;
+    border:1px solid #ccc;
     padding:10px;
     margin-bottom:10px;
     border-radius:5px;
     cursor:grab;
+}
+
+.today-subject{
+    color:red;
+    font-weight:bold;
+    border:2px solid red;
+    background:#ffeaea;
 }
 
 .calendar{
@@ -56,24 +63,13 @@ button{
 .day{
     min-height:120px;
     border:2px dashed #ccc;
-    border-radius:5px;
     padding:5px;
+    border-radius:5px;
 }
 
 .day-title{
     font-weight:bold;
     margin-bottom:5px;
-}
-
-.today{
-    border:3px solid red;
-    background:#ffeaea;
-}
-
-.today .day-title{
-    color:red;
-    font-weight:bold;
-    font-size:18px;
 }
 
 .tag{
@@ -82,10 +78,4 @@ button{
     margin-top:5px;
     border-radius:5px;
     cursor:pointer;
-}
-
-.today-tag{
-    color:red;
-    font-weight:bold;
-    border:2px solid red;
 }
