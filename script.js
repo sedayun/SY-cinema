@@ -1,57 +1,4 @@
 ```javascript
-let count = 0;
-
-function calculateDday(date){
-    const today = new Date();
-    const target = new Date(date);
-
-    today.setHours(0,0,0,0);
-    target.setHours(0,0,0,0);
-
-    const diff =
-        Math.ceil((target - today)/(1000*60*60*24));
-
-    return diff >= 0 ? "D-" + diff : "D+" + Math.abs(diff);
-}
-
-function addSchedule(){
-
-    const type =
-        document.getElementById("examType").value;
-
-    const name =
-        document.getElementById("subjectName").value;
-
-    const date =
-        document.getElementById("examDate").value;
-
-    if(name === "" || date === ""){
-        alert("모든 항목을 입력하세요.");
-        return;
-    }
-
-    const item = document.createElement("div");
-    item.className = "schedule-item";
-    item.draggable = true;
-
-    item.innerHTML =
-        `<strong>${name}</strong><br>
-        ${type}<br>
-        ${calculateDday(date)}`;
-
-    item.id = "item" + count++;
-
-    item.addEventListener("dragstart", function(e){
-        e.dataTransfer.setData("text", item.innerHTML);
-    });
-
-    document.getElementById("scheduleList")
-        .appendChild(item);
-
-    document.getElementById("subjectName").value = "";
-    document.getElementById("examDate").value = "";
-}
-
 function createCalendar(){
 
     const calendar =
@@ -67,9 +14,18 @@ function createCalendar(){
         const day = document.createElement("div");
         day.className = "day";
 
+        // 오늘 날짜인 경우
+        let titleStyle = "";
+        let titleText = `${date.getMonth()+1}/${date.getDate()}`;
+
+        if(i === 0){
+            titleStyle = "color:red; font-weight:bold;";
+            titleText = `오늘 (${date.getMonth()+1}/${date.getDate()})`;
+        }
+
         day.innerHTML =
-            `<div class="day-title">
-            ${date.getMonth()+1}/${date.getDate()}
+            `<div class="day-title" style="${titleStyle}">
+                ${titleText}
             </div>`;
 
         day.addEventListener("dragover", function(e){
@@ -101,4 +57,3 @@ function createCalendar(){
 }
 
 createCalendar();
-```
