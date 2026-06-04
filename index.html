@@ -1,0 +1,43 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습 플래너</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h2>일정 추가</h2>
+
+        <select id="examType">
+            <option value="기말고사">기말고사</option>
+            <option value="자격증">자격증</option>
+            <option value="기타">기타</option>
+        </select>
+
+        <input type="text" id="subjectName" placeholder="과목명 입력">
+
+        <input type="date" id="examDate">
+
+        <button onclick="addSchedule()">추가</button>
+
+        <h3>목표 목록</h3>
+        <div id="scheduleList"></div>
+    </div>
+
+    <div class="main">
+        <h2>30일 학습 일정표</h2>
+        <div id="calendar" class="calendar"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+```
