@@ -1,74 +1,105 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학습 플래너</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Review</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="container">
-
-    <div class="sidebar">
-
-        <h2>학습 일정 추가</h2>
-
-        <select id="examType">
-            <option>중간고사</option>
-            <option>기말고사</option>
-            <option>자격증</option>
-            <option>기타</option>
-        </select>
-
-        <input type="text"
-               id="subjectName"
-               placeholder="과목명 입력">
-
-        <input type="date"
-               id="examDate">
-
-        <button onclick="addSchedule()">
-            일정 추가
-        </button>
-
-        <h3>목표 목록</h3>
-
-        <div id="scheduleList"></div>
-
-    </div>
-
-    <div class="main">
-
-        <h2>학습 달력</h2>
-
-        <select id="monthSelect"
-                onchange="createCalendar()">
-
-            <option value="0">1월</option>
-            <option value="1">2월</option>
-            <option value="2">3월</option>
-            <option value="3">4월</option>
-            <option value="4">5월</option>
-            <option value="5">6월</option>
-            <option value="6">7월</option>
-            <option value="7">8월</option>
-            <option value="8">9월</option>
-            <option value="9">10월</option>
-            <option value="10">11월</option>
-            <option value="11">12월</option>
-
-        </select>
-
-        <div id="calendar"
-             class="calendar">
+ 
+<header>
+    <h1>Movie Review</h1>
+    <p>다양한 영화 정보를 확인하고 리뷰를 작성해보세요.</p>
+</header>
+ 
+<nav>
+    <a href="#" onclick="goHome()">홈</a>
+    <a href="#">영화목록</a>
+    <a href="#">내가 작성한 리뷰</a>
+</nav>
+ 
+<section id="movie-list">
+ 
+    <h2>🎬 영화 목록</h2>
+ 
+    <div class="movie-container">
+ 
+        <div class="movie-card" onclick="showMovie('군체')">
+            <img src="m1.jpg" alt="군체 포스터" class="movie-poster">
+            <div class="movie-info">
+                <div class="movie-title">군체</div>
+                <div class="movie-genre">공포 / 스릴러</div>
+                <div class="movie-rating">★ 4.2</div>
+            </div>
         </div>
-
+ 
+        <div class="movie-card" onclick="showMovie('프로젝트 헤일메리')">
+            <img src="m2.jpg" alt="프로젝트 헤일메리 포스터" class="movie-poster">
+            <div class="movie-info">
+                <div class="movie-title">프로젝트 헤일메리</div>
+                <div class="movie-genre">SF</div>
+                <div class="movie-rating">★ 4.9</div>
+            </div>
+        </div>
+ 
+        <div class="movie-card" onclick="showMovie('클래식')">
+            <img src="m3.jpg" alt="클래식 포스터" class="movie-poster">
+            <div class="movie-info">
+                <div class="movie-title">클래식</div>
+                <div class="movie-genre">로맨스</div>
+                <div class="movie-rating">★ 4.6</div>
+            </div>
+        </div>
+ 
+        <div class="movie-card" onclick="showMovie('스타워즈6')">
+            <img src="m4.jpg" alt="스타워즈 포스터" class="movie-poster">
+            <div class="movie-info">
+                <div class="movie-title">스타워즈 6</div>
+                <div class="movie-genre">SF</div>
+                <div class="movie-rating">★ 4.8</div>
+            </div>
+        </div>
+ 
     </div>
-
-</div>
-
+ 
+</section>
+ 
+<section id="movie-detail" style="display:none;">
+ 
+    <h2 id="detail-title"></h2>
+    <img id="detail-poster" width="300">
+    <p id="detail-genre"></p>
+    <p id="detail-rating"></p>
+    <p id="detail-story"></p>
+ 
+    <h2>리뷰 작성</h2>
+ 
+    <label for="reviewRating">평점</label>
+    <select id="reviewRating">
+        <option>★★★★★</option>
+        <option>★★★★☆</option>
+        <option>★★★☆☆</option>
+        <option>★★☆☆☆</option>
+        <option>★☆☆☆☆</option>
+    </select>
+ 
+    <label for="reviewContent">내용</label>
+    <textarea id="reviewContent" rows="5" placeholder="리뷰 내용을 입력하세요"></textarea>
+ 
+    <button onclick="addReview()">리뷰 등록</button>
+ 
+    <hr>
+ 
+    <h2>리뷰 보기</h2>
+    <div id="reviewList"></div>
+ 
+</section>
+ 
+<footer>
+    © 2026 Movie Review
+</footer>
+ 
 <script src="script.js"></script>
-
 </body>
 </html>

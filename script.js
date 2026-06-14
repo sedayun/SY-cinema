@@ -1,183 +1,103 @@
-let count = 0;
+let currentMovie = "";
+let reviews = [];
 
-function calculateDday(date){
+function showMovie(movie) {
 
-    const today = new Date();
-    const target = new Date(date);
+    currentMovie = movie;
 
-    today.setHours(0,0,0,0);
-    target.setHours(0,0,0,0);
+    document.getElementById("movie-list").style.display = "none";
+    document.getElementById("movie-detail").style.display = "block";
 
-    const diff =
-        Math.ceil(
-            (target - today) /
-            (1000*60*60*24)
-        );
+    if (movie == "군체") {
 
-    return diff >= 0
-        ? "D-" + diff
-        : "D+" + Math.abs(diff);
+        document.getElementById("detail-title").innerText = "군체";
+        document.getElementById("detail-poster").src = "m1.jpg";
+        document.getElementById("detail-genre").innerText = "장르 : 공포 / 스릴러";
+        document.getElementById("detail-rating").innerText = "평점 : ★ 4.2";
+        document.getElementById("detail-story").innerText =
+            "서울 도심 초고층 빌딩에서 집단 감염사태가 발생, 건물이 봉쇄된다. 생존자들은 진화하는 감염자들을 피해 옥상으로 향하지만, 새로운 위협이 그들을 기다리고 있다.";
+    }
+
+    else if (movie == "프로젝트 헤일메리") {
+
+        document.getElementById("detail-title").innerText = "프로젝트 헤일메리";
+        document.getElementById("detail-poster").src = "m2.jpg";
+        document.getElementById("detail-genre").innerText = "장르 : SF";
+        document.getElementById("detail-rating").innerText = "평점 : ★ 4.9";
+        document.getElementById("detail-story").innerText =
+            "우주에서 홀로 깨어난 과학교사 '그레이스'. 죽어가는 태양으로부터 지구를 구하기 위한 마지막 미션이 시작된다.";
+    }
+
+    else if (movie == "클래식") {
+
+        document.getElementById("detail-title").innerText = "클래식";
+        document.getElementById("detail-poster").src = "m3.jpg";
+        document.getElementById("detail-genre").innerText = "장르 : 로맨스";
+        document.getElementById("detail-rating").innerText = "평점 : ★ 4.6";
+        document.getElementById("detail-story").innerText =
+            "친구의 편지를 대신 써주다 자신의 감정을 고백하게 된 지혜. 엇갈린 사랑과 오해 속에서 두 세대에 걸쳐 피어나는 아름다운 로맨스.";
+    }
+
+    else {
+
+        document.getElementById("detail-title").innerText = "스타워즈 6";
+        document.getElementById("detail-poster").src = "m4.jpg";
+        document.getElementById("detail-genre").innerText = "장르 : SF";
+        document.getElementById("detail-rating").innerText = "평점 : ★ 4.8";
+        document.getElementById("detail-story").innerText =
+            "루크 스카이워커는 친구 한 솔로를 구하고 은하 제국의 새로운 죽음의 별을 막기 위해 반란 연합과 마지막 결전에 나선다. 스타워즈 오리진널 트릴로지의 마지막 영화";
+    }
+
+    displayReviews();
 }
 
-function addSchedule(){
+function goHome() {
 
-    const type =
-        document.getElementById("examType").value;
+    document.getElementById("movie-list").style.display = "block";
+    document.getElementById("movie-detail").style.display = "none";
+}
 
-    const name =
-        document.getElementById("subjectName").value;
+function addReview() {
 
-    const date =
-        document.getElementById("examDate").value;
+    let rating = document.getElementById("reviewRating").value;
+    let content = document.getElementById("reviewContent").value;
 
-    if(name === "" || date === ""){
-        alert("모든 항목을 입력하세요.");
+    if (content == "") {
+
+        alert("리뷰 내용을 입력하세요.");
         return;
     }
 
-    const item =
-        document.createElement("div");
+    reviews.push({
+        movie: currentMovie,
+        rating: rating,
+        content: content
+    });
 
-    const today =
-        new Date();
+    alert("리뷰가 등록되었습니다.");
 
-    const examDate =
-        new Date(date);
+    document.getElementById("reviewContent").value = "";
 
-    today.setHours(0,0,0,0);
-    examDate.setHours(0,0,0,0);
+    displayReviews();
+}
 
-    if(today.getTime() === examDate.getTime()){
-        item.className =
-            "schedule-item today-subject";
-    }
-    else{
-        item.className =
-            "schedule-item";
-    }
+function displayReviews() {
 
-    item.draggable = true;
+    let html = "";
 
-    item.innerHTML =
-        `<strong>${name}</strong><br>
-        ${type}<br>
-        ${calculateDday(date)}`;
+    for (let i = 0; i < reviews.length; i++) {
 
-    item.id =
-        "item" + count++;
+        if (reviews[i].movie == currentMovie) {
 
-    item.addEventListener(
-        "dragstart",
-        function(e){
-
-            e.dataTransfer.setData(
-                "text/plain",
-                item.innerHTML
-            );
-
+            html += `
+<div class="review-card">
+    <h3>익명</h3>
+    <p>${reviews[i].rating}</p>
+    <p>${reviews[i].content}</p>
+</div>
+`;
         }
-    );
-
-    document
-        .getElementById("scheduleList")
-        .appendChild(item);
-
-    document
-        .getElementById("subjectName")
-        .value = "";
-
-    document
-        .getElementById("examDate")
-        .value = "";
-}
-
-function createCalendar(){
-
-    const calendar =
-        document.getElementById("calendar");
-
-    calendar.innerHTML = "";
-
-    const year =
-        new Date().getFullYear();
-
-    const month =
-        parseInt(
-            document.getElementById("monthSelect").value
-        );
-
-    const days =
-        new Date(
-            year,
-            month + 1,
-            0
-        ).getDate();
-
-    for(let i=1;i<=days;i++){
-
-        const day =
-            document.createElement("div");
-
-        day.className =
-            "day";
-
-        day.innerHTML =
-            `<div class="day-title">
-                ${month+1}/${i}
-            </div>`;
-
-        day.addEventListener(
-            "dragover",
-            function(e){
-                e.preventDefault();
-            }
-        );
-
-        day.addEventListener(
-            "drop",
-            function(e){
-
-                e.preventDefault();
-
-                const data =
-                    e.dataTransfer.getData(
-                        "text/plain"
-                    );
-
-                const tag =
-                    document.createElement("div");
-
-                tag.className =
-                    "tag";
-
-                tag.innerHTML =
-                    data;
-
-                tag.onclick =
-                    function(){
-
-                        if(confirm("삭제하시겠습니까?")){
-                            tag.remove();
-                        }
-
-                    };
-
-                day.appendChild(tag);
-
-            }
-        );
-
-        calendar.appendChild(day);
     }
+
+    document.getElementById("reviewList").innerHTML = html;
 }
-
-window.onload = function(){
-
-    document
-        .getElementById("monthSelect")
-        .value =
-        new Date().getMonth();
-
-    createCalendar();
-
-};
